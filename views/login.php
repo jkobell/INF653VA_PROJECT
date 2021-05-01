@@ -1,7 +1,7 @@
 <?php
 
 if (!empty($_POST["click_to_login"])) {
-    include_once '../models/user.php';
+    include_once './models/user.php';
     $user = new user();
     $login_response = $user->loginUser();
 }
@@ -9,16 +9,20 @@ if (!empty($_POST["click_to_login"])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Login</title>
-<link rel="stylesheet" type="text/css" href="../styles/main.css" />
-<link rel="stylesheet" type="text/css" href="../styles/register.css" />
-<script type="text/javascript" src="../js/jquery/jquery-3.3.1.js"></script>
+	<title>Login</title>
+	<meta charset="UTF-8">
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
+	<link rel="stylesheet" type="text/css" href="./styles/main.css" />
+	<link rel="stylesheet" type="text/css" href="./styles/register.css" />
+	<!-- <link rel="stylesheet" type="text/css" href="./styles/signin.css" /> -->
+	<!-- <link rel="stylesheet" type="text/css" href="../bs/dist/css/bootstrap.min.css"> -->
+	<script type="text/javascript" src="./js/jquery/jquery-3.3.1.js"></script>
 </head>
 <body>
 	<div class="main-container">
 		<div class="sign-up-container">
 			<div class="login-signup">
-				<a href="register_user.php">Register-->here</a>
+				<a href="./views/register_user.php">Register</a>
 			</div>
 			<div class="signup-align">
 				<form name="login" action="" method="post"

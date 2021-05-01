@@ -10,6 +10,7 @@ if (!empty($_POST["click_to_register"])) {
 <html lang="en">
 <head>
 <title>Registration</title>
+<meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="../styles/main.css" />
 <link rel="stylesheet" type="text/css" href="../styles/register.css" />
 <script type="text/javascript" src="../js/jquery/jquery-3.3.1.js"></script>
@@ -18,7 +19,7 @@ if (!empty($_POST["click_to_register"])) {
 	<div class="main-container">
 		<div class="sign-up-container">
 			<div class="login-signup">
-				<a href="index.php">Login-->here</a>
+				<a href="../index.php">Login</a>
 			</div>
 			<div class="">
 				<form name="sign-up" action="" method="post"
