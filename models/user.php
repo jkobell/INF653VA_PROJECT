@@ -107,9 +107,11 @@ class User
             //start a session if login authenticates. write session and close
             session_start();
             $_SESSION["username"] = $registeredUser["userName"];
-            session_write_close();
-            $url = "../views/userlist.php";
+            session_write_close();           
+
+            $url = "./views/defaultuserlistitem.php";
             header("Location: $url");
+
         } else if ($login_password == 0) {
             $login_message = "Invalid username or password.";
             return $login_message;
