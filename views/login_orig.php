@@ -17,14 +17,14 @@ if (!empty($_POST["click_to_login"])) {
 	<link rel="stylesheet" type="text/css" href="../bs/dist/css/bootstrap.min.css">
 	<script type="text/javascript" src="./js/jquery/jquery-3.3.1.js"></script>
 </head>
-<body>
+<body class="text-center">
 	<div class="main-container">
 		<div class="sign-up-container">
 			<div class="login-signup">
 				<a href="./views/register_user.php">Register</a>
 			</div>
 			<div class="signup-align">
-				<form name="login" action="" method="post"
+				<form class="form-signin" name="login" action="" method="post"
 					onsubmit="return loginValidation()">
 					<div class="signup-heading">Login Details</div>
 				<?php if(!empty($login_response)){?>
@@ -35,7 +35,7 @@ if (!empty($_POST["click_to_login"])) {
 							<div class="form-label">
 								Email<span class="required error" id="username-info"></span>
 							</div>
-							<input class="input-box-330" type="text" name="username"
+							<input class="form-control" type="text" name="username"
 								id="username">
 						</div>
 					</div>
@@ -44,7 +44,7 @@ if (!empty($_POST["click_to_login"])) {
 							<div class="form-label">
 								Password<span class="required error" id="login_password_info"></span>
 							</div>
-							<input class="input-box-330" type="password"
+							<input class="form-control" type="password"
 								name="login_password" id="login_password">
 						</div>
 					</div>

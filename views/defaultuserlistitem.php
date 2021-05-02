@@ -11,8 +11,8 @@ if ($items != null)
 }
 else
 {
-    //redirect to additem.php
-    $items = $userlistitem->getDefaultUserListItems('tester0@aol.com');
-    include_once 'userlist.php';
+    //redirect to additem.php    
+    $url = "additem.php";
+    header("Location: $url");    
 }
 ?>

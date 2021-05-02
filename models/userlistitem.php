@@ -1,6 +1,7 @@
 <?php
 include_once 'dbConn.php';
-
+//class for queries on userslistitems table
+//inner joins are used for many to many 
 class UserListItem
 {
     public function getDefaultUserListItems($username)
@@ -520,8 +521,132 @@ class UserListItem
 
       $stmt->closeCursor();
     }
+
+    public function getSearchItems($valueArray)
+    {
+      $str = $valueArray['item'];
+      $search = '%'.$str.'%';
+      try
+      {
+        $db = new DbConnect();
+        $pdo = $db -> dbh;
+
+        $query = "SELECT        
+                    item 
+                  FROM
+                    listitems                  
+                  WHERE 
+                    item LIKE :item";
+
+        $stmt = $pdo->prepare($query);
+        $stmt->bindValue(':item', $search);
+
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        return($result);
+      }
+      catch (PDOException $e){
+          $error_exception = $e->getMessage();
+          return ($error_exception);
+      }
+
+      $stmt->closeCursor();
+    }
+
+    public function insertMasterListItem($valueArray)
+    {
+      try
+      {
+        $db = new DbConnect();
+        $pdo = $db -> dbh;
+
+        $query = 'INSERT INTO        
+                    listitems
+                    (item) 
+                  VALUES
+                    (:item)';
+
+        $stmt = $pdo->prepare($query);
+        $stmt->bindValue(':item', $valueArray['item']);
+
+        $result = $stmt->execute();        
+        return($result);
+      }
+      catch (PDOException $e){
+          $error_exception = $e->getMessage();
+          return ($error_exception);
+      }
+
+      $stmt->closeCursor();
+    }
+
+    public function insertUserListItem($valueArray)
+    {
+      $username= '';
+      session_start();
+
+      if (isset($_SESSION["username"]))
+      {
+        $username = $_SESSION["username"];
+      }
+      session_write_close();
+
+      try
+      {
+        $db = new DbConnect();
+        $pdo = $db -> dbh;
+
+        $query = 'INSERT INTO        
+                    userslistitems
+                    (userId, listItemId, categoryId, storeId, frequencyId)
+                  VALUES
+                    ((SELECT        
+                        userId 
+                      FROM
+                        users u
+                      WHERE u.userName = :userName),
+                    (SELECT        
+                        listItemId 
+                      FROM
+                        listitems l
+                      WHERE l.item = :item),
+                    (SELECT        
+                        categoryId 
+                      FROM
+                        categories c
+                      WHERE c.categoryName = :categoryName), 
+                    (SELECT        
+                        storeId 
+                      FROM
+                        stores s
+                      WHERE s.storeName = :storeName),
+                    (SELECT        
+                        frequencyId 
+                      FROM
+                        frequencies f
+                      WHERE f.frequency = :frequency))';                  
+                    
+
+        $stmt = $pdo->prepare($query);
+        $stmt->bindValue(':userName', $username);
+        $stmt->bindValue(':item', $valueArray['item']);
+        $stmt->bindValue(':categoryName', $valueArray['categoryName']);
+        $stmt->bindValue(':storeName', $valueArray['storeName']);
+        $stmt->bindValue(':frequency', $valueArray['frequency']);
+
+        $result = $stmt->execute();        
+        return($result);
+      }
+      catch (PDOException $e){
+          $error_exception = $e->getMessage();
+          return ($error_exception);
+      }
+
+      $stmt->closeCursor();
+    }
 }
 
+//update controller
 if (isset($_POST["userListItemId"]))
 {
   $uli = new UserListItem();
@@ -553,7 +678,7 @@ if (isset($_POST["userListItemId"]))
       $formResultData == true ? $response = 'Update Successful!': $response = 'Update Failed!'; 
       echo json_encode($response);
     }
-
+    //delete
     if (($_POST['update_action']) == "deletelistitem")
     {
       $formData['userListItemId'] = filter_var($_POST['userListItemId'], FILTER_SANITIZE_STRING);      
@@ -565,6 +690,7 @@ if (isset($_POST["userListItemId"]))
   }  
 }
 
+//get controller
 if (isset($_POST['get_action']))
 {
   $uli = new UserListItem();
@@ -624,5 +750,43 @@ if (isset($_POST['get_action']))
     $getResultData = $uli->getAllFrequencies();    
     echo json_encode($getResultData);
   }
+
+  if (($_POST['get_action']) == "searchitems")
+  {  
+    $formData['item'] = filter_var($_POST['item'], FILTER_SANITIZE_STRING);  
+    $getResultData = $uli->getSearchItems($formData);    
+    echo json_encode($getResultData);
+  }
 }
+
+//insert controller
+if (isset($_POST['insert_action']))
+  {
+    $uli = new UserListItem();
+    $formData = array();    
+    $getResultData = array();
+
+    if (($_POST['insert_action']) == "insertmasterlistitem")
+    {
+      $formData['item'] = filter_var($_POST['item'], FILTER_SANITIZE_STRING);
+
+      $formResultData = $uli->insertMasterListItem($formData);
+
+      $formResultData === true ? $response = 'Insert Successful!': $response = 'Insert Failed!'; 
+      echo json_encode($response);
+    }
+
+    if (($_POST['insert_action']) == "insertuserlistitem")
+    {
+      $formData['item'] = filter_var($_POST['item'], FILTER_SANITIZE_STRING);
+      $formData['categoryName'] = filter_var($_POST['categoryName'], FILTER_SANITIZE_STRING);
+      $formData['storeName'] = filter_var($_POST['storeName'], FILTER_SANITIZE_STRING);
+      $formData['frequency'] = filter_var($_POST['frequency'], FILTER_SANITIZE_STRING);
+
+      $formResultData = $uli->insertUserListItem($formData);
+
+      $formResultData == true ? $response = 'Insert Successful!': $response = 'Insert Failed!'; 
+      echo json_encode($response);
+    }
+  }
 ?>

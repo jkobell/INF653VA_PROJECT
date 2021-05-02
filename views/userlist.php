@@ -1,5 +1,5 @@
 <?php
-include_once 'view_header.php';
+include_once 'view_header.php';//DRY html head
 ?>
 
 <body id="indexBody">
@@ -15,8 +15,8 @@ include_once 'view_header.php';
             <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="../views/defaultuserlistitem.php"> Sort by Category</a></li>
             <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="../views/sortbyitem.php"> Sort by Item</a></li>
             <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="../views/sortbystore.php"> Sort by Store</a></li>
-            <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="../views/additem.php">Add Item</a></li>
-            <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="../views/logout.php"> Logout</a></li>              
+            <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="../views/additem.php">Add My Grocery List Item</a></li>
+            <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="../views/logout.php">Logout</a></li>              
         </ul>
     </div>  
 </nav>    
@@ -47,7 +47,7 @@ foreach ($items as $item)
     echo '<div class="col-12 col-md-3 p-2 listeditem">
       <div class="d-md-none d-inline-flex font-weight-bold">Item: </div>
       <div class="d-flex">
-          <input type="text" id="itemulid'.htmlspecialchars($item["userListItemId"]).'" class="form-control" style="text-align: center;" name="item" readonly="readonly" value="'.htmlspecialchars($item["item"]).'" required maxlength="100">
+          <input type="text" id="itemulid'.htmlspecialchars($item["userListItemId"]).'" class="form-control" style="text-align: center;" name="item" readonly="readonly" value="'.htmlspecialchars($item["item"]).'">
       </div>            
     </div>';
     echo '<div class="col-12 col-md-1 p-2">
@@ -82,24 +82,7 @@ foreach ($items as $item)
             <div class="d-flex frequencycontainer frequencyulid'.htmlspecialchars($item["userListItemId"]).'" data-ulid="'.htmlspecialchars($item["userListItemId"]).'"">            
                 <input type="text" id="frequencyulid'.htmlspecialchars($item["userListItemId"]).'" data-ulid="'.htmlspecialchars($item["userListItemId"]).'" data-inputstate="typetext" class="form-control editformfrequency" style="text-align: center;" name="frequency" readonly="readonly" value="'.htmlspecialchars($item["frequency"]).'">
             </div>           
-          </div>';
-
-    /* echo '<div class="col-12 col-md-1 p-2 text-center">
-            <button class="btn btn-default edit">Edit</button>
-          </div>'; */
-          
-    /* echo '<div class="col-12 col-md-1 p-2 text-center">                
-            <input type="hidden" name="userListItemId" value="'.htmlspecialchars($item["userListItemId"]).'">
-            <input type="submit" value="Edit">
-          </div>'; */
-    
-    /* echo '<div class="col-12 col-md-1 p-2 text-right">';  
-    echo '<form method="post" action="/inf653/cms/index.php">
-            <input type="hidden" name="userListItemId" value="'.htmlspecialchars($item["userListItemId"]).'">
-            <input type="submit" class="" value="Delete">
-          </form>';
-    echo '</div>';  */
-
+          </div>'; 
     echo '<div class="col-12 col-md-1 p-2">          
             <div class="d-flex saveordelete">              
             <input type="hidden" class="useritemid" name="userListItemId" value="'.htmlspecialchars($item["userListItemId"]).'">
@@ -119,7 +102,7 @@ foreach ($items as $item)
 
 
 <?php
-include_once 'view_footer.php';
+include_once 'view_footer.php';//DRY html footer
 ?>
 
 
