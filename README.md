@@ -6,5 +6,9 @@ admin mode: userlist view and maintain masterlist
 
 ajax calls for gets saves updates deletes
 
+search of master list items
+
+
+
 
 
