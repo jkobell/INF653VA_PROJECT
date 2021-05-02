@@ -1,11 +1,12 @@
 .sign-up-container {
-	border: 1px solid;
+	box-sizing: border-box;
+	border: 3px solid;
 	border-color: #9a9a9a;
 	background: #fff;
 	border-radius: 4px;
 	padding: 10px;
-	width: 350px;
-	margin: 50px auto;
+	width: 95%;
+	margin: 55px auto;
 }
 
 .page-header {
@@ -31,7 +32,7 @@
 }
 
 .inline-block {
-	display: inline-block;
+	display: block;	
 }
 
 .row {
@@ -44,8 +45,8 @@
 	text-align: left;
 }
 
-input.input-box-330 {
-	width: 250px;
+input .input-box-330 {
+	width: 95%;
 }
 
 .sign-up-container .error {
@@ -77,12 +78,13 @@ input.input-box-330 {
 	text-align: center;
 }
 
-input.btn {
-	width: 250px
+input .btn {
+	width: 95%;
 }
 
 .signup-align {
 	margin: 0 auto;
+	width: 85%;
 }
 
 .page-content {

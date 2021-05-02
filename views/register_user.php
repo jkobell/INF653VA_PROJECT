@@ -11,6 +11,7 @@ if (!empty($_POST["click_to_register"])) {
 <head>
 <title>Registration</title>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" type="text/css" href="../styles/main.css" />
 <link rel="stylesheet" type="text/css" href="../styles/register.css" />
 <script type="text/javascript" src="../js/jquery/jquery-3.3.1.js"></script>
